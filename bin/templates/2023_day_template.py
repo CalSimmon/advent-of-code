@@ -1,3 +1,10 @@
+from pathlib import Path
+
+SCRIPT_PATH = Path(__file__).resolve().parent
+INPUT_PATH = Path(SCRIPT_PATH, "inputs/input.txt")
+# INPUT_PATH = Path(SCRIPT_PATH, "inputs/example1.txt")
+# INPUT_PATH = Path(SCRIPT_PATH, "inputs/example2.txt")
+
 def parse_input(data):
     data_list = data.splitlines()
     # Add parsing code here
@@ -12,7 +19,7 @@ def part2(parsed_data):
     return 'part2'
 
 if __name__ == "__main__":
-    with open("example.txt" , "r") as f:
+    with open(INPUT_PATH , "r") as f:
         parsed_data = parse_input(f.read())
 
     print("--- PART 1 ---")

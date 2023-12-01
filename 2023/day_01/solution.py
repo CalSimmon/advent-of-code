@@ -1,4 +1,10 @@
 import re
+from pathlib import Path
+
+SCRIPT_PATH = Path(__file__).resolve().parent
+INPUT_PATH = Path(SCRIPT_PATH, "inputs/input.txt")
+# INPUT_PATH = Path(SCRIPT_PATH, "inputs/example1.txt")
+# INPUT_PATH = Path(SCRIPT_PATH, "inputs/example2.txt")
 
 def parse_input(data):
     # Function for parsing input.
@@ -35,7 +41,7 @@ def part2(parsed_data):
     return total_value
 
 if __name__ == "__main__":
-    with open("inputs/input.txt" , "r") as f:
+    with open(INPUT_PATH , "r") as f:
         parsed_data = parse_input(f.read())
 
     print("--- PART 1 ---")
