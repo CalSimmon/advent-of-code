@@ -28,7 +28,7 @@ def part2(parsed_data):
         match_list = [match.group(1) for match in matches]  # Since it's an iterable, turn matches into a list
         first_digit = match_list[0] if match_list[0].isdigit() else number_dict[match_list[0]]  # If match is not digit, get digit value from number_dict
         second_digit = match_list[-1] if match_list[-1].isdigit() else number_dict[match_list[-1]]
-        calibration_value = (int(first_digit) * 10) + int(second_digit)
+        calibration_value = (int(first_digit) * 10) + int(second_digit) # Multiply the first digit by ten and add the second digit
         print(f"Calibration value of {line} is {calibration_value}")
         total_value += calibration_value
 
