@@ -15,8 +15,8 @@ def get_year_options() -> list:
 def parse_args() -> argparse.Namespace:
     # Create an instance of ArgumentParser and add the year argument
     parser = argparse.ArgumentParser()
-    parser.add_argument('year', type=str, choices=get_year_options(), metavar='YEAR')
-    parser.add_argument('-t', '--tries', type=int, nargs='?', metavar='TRIES')
+    parser.add_argument('year', type=str, choices=get_year_options(), metavar='YEAR', help='The year of AoC that you want to check')
+    parser.add_argument('-t', '--tries', type=int, nargs='?', metavar='TRIES', help='The number of times you want to try each script')
     args = parser.parse_args()
 
     return args
@@ -41,6 +41,7 @@ def main():
         total_year += day_average
         print("{}_{} took an average of {:.4f} seconds to run.".format(args.year, day, day_average))
     print("--------\n{} took a total of {:.4f} seconds to run.".format(args.year, total_year))
+
     plt.bar(day_title_data, day_exec_data)
     plt.xlabel('Day')
     plt.ylabel('Execution Time (s)')
