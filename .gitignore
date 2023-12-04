@@ -161,3 +161,6 @@ cython_debug/
 
 # Image outputs
 bin/scripts/graphs/
+
+# Ignore all inputs
+*.txt
