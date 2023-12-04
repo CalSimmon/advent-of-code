@@ -30,16 +30,17 @@ def main():
     day_title_data = []
     day_exec_data = []
     for day in os.listdir(year_path):
-        total_day_runs = 0
-        for _ in range(tries):
-            start = time()
-            subprocess.run(['python3', Path(year_path, day) / 'solution.py'], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
-            total_day_runs += time() - start
-        day_average = (total_day_runs / tries)
-        day_title_data.append(day)
-        day_exec_data.append(day_average)
-        total_year += day_average
-        print("{}_{} took an average of {:.4f} seconds to run.".format(args.year, day, day_average))
+        if os.path.isdir(Path(year_path, day)):
+            total_day_runs = 0
+            for _ in range(tries):
+                start = time()
+                subprocess.run(['python3', Path(year_path, day) / 'solution.py'], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+                total_day_runs += time() - start
+            day_average = (total_day_runs / tries)
+            day_title_data.append(day)
+            day_exec_data.append(day_average)
+            total_year += day_average
+            print("{}_{} took an average of {:.4f} seconds to run.".format(args.year, day, day_average))
     print("--------\n{} took a total of {:.4f} seconds to run.".format(args.year, total_year))
 
     plt.bar(day_title_data, day_exec_data)
@@ -48,6 +49,7 @@ def main():
     plt.title(f'Execution Time per Day for {args.year}')
     formatted_date_time = datetime.now().strftime('%Y%m%d_T%H%M%S')
     plt.savefig(f'{Path(SCRIPT_DIR, f"graphs/{formatted_date_time}-{args.year}_execution_times.png")}')
+    plt.savefig(f'{Path(BASE_DIR, f"{args.year}/{args.year}-current_execution_times.png")}')
 
 if __name__ == "__main__":
     main()
