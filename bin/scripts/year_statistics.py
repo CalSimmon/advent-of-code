@@ -24,15 +24,15 @@ def parse_args() -> argparse.Namespace:
 ### Entry Point ###
 def main():
     args = parse_args()
-    tries = args.tries if args.tries != None else 3 
+    tries = args.tries if args.tries != None else 3  # Set a default number of tries
     total_year = 0.0
-    year_path = Path(BASE_DIR, args.year)
+    year_path = Path(BASE_DIR, args.year)  # Create a path for the year based on year argument
     day_title_data = []
     day_exec_data = []
     for day in os.listdir(year_path):
-        if os.path.isdir(Path(year_path, day)):
+        if os.path.isdir(Path(year_path, day)):  # Ensure that the day is actually a folder
             total_day_runs = 0
-            for _ in range(tries):
+            for _ in range(tries):  # Run each script a number of times based on the tries argument and get average of all runs
                 start = time()
                 subprocess.run(['python3', Path(year_path, day) / 'solution.py'], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
                 total_day_runs += time() - start
@@ -43,6 +43,7 @@ def main():
             print("{}_{} took an average of {:.4f} seconds to run.".format(args.year, day, day_average))
     print("--------\n{} took a total of {:.4f} seconds to run.".format(args.year, total_year))
 
+    # Set up graph and output to both the graphs folder for history and to the year folder for GitHub
     plt.bar(day_title_data, day_exec_data)
     plt.xlabel('Day')
     plt.ylabel('Execution Time (s)')
