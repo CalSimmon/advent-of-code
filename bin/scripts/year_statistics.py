@@ -37,7 +37,7 @@ def main():
                 subprocess.run(['python3', Path(year_path, day) / 'solution.py'], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
                 total_day_runs += time() - start
             day_average = (total_day_runs / tries)
-            day_title_data.append(day)
+            day_title_data.append(day.replace('day_', ''))
             day_exec_data.append(day_average)
             total_year += day_average
             print("{}_{} took an average of {:.4f} seconds to run.".format(args.year, day, day_average))
