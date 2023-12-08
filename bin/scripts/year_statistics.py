@@ -1,7 +1,7 @@
 import os
 import subprocess
 import argparse
-from time import time
+from time import perf_counter
 from datetime import datetime
 from pathlib import Path
 import matplotlib.pyplot as plt
@@ -32,10 +32,11 @@ def main():
     for day in os.listdir(year_path):
         if os.path.isdir(Path(year_path, day)):  # Ensure that the day is actually a folder
             total_day_runs = 0
+            script_path = Path(year_path, day) / 'solution.py'
             for _ in range(tries):  # Run each script a number of times based on the tries argument and get average of all runs
-                start = time()
-                subprocess.run(['python3', Path(year_path, day) / 'solution.py'], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
-                total_day_runs += time() - start
+                start = perf_counter()
+                subprocess.run(['python3', script_path], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+                total_day_runs += perf_counter() - start
             day_average = (total_day_runs / tries)
             day_title_data.append(day.replace('day_', ''))
             day_exec_data.append(day_average)
