@@ -1,6 +1,7 @@
 import os
 import shutil
 import argparse
+import requests
 from datetime import datetime
 from pathlib import Path
 
@@ -22,13 +23,23 @@ def parse_args() -> argparse.Namespace:
 
     return args
 
-def add_files(path):
+def add_files(path, year, day):
     inputs_path = Path(path, 'inputs')
     inputs_path.mkdir(parents=True, exist_ok=False)
-    input_files =['example1.txt', 'example2.txt', 'input.txt']
-    for file in input_files:
+    with open(Path(inputs_path, 'input.txt'), 'w') as f:
+        f.write(pull_input(year, day))
+    example_files =['example1.txt', 'example2.txt']
+    for file in example_files:
         open(Path(inputs_path, file), 'x').close()
     shutil.copy(Path(TEMPLATES_DIR, '2023_day_template.py'), Path(path, 'solution.py'))
+
+def pull_input(year, day):
+    session_cookie = os.getenv("AOC_SESSION_COOKIE")
+    url = f"https://adventofcode.com/{year}/day/{day}/input"
+    cookies = {"session": session_cookie}
+    response = requests.get(url, cookies=cookies)
+    
+    return response.text
 
 
 ### Entry Point ###
@@ -40,7 +51,7 @@ def main():
     except FileExistsError:
         print("Folder already exists.  Please delete or choose a different day.")
         exit(1)
-    add_files(new_day_path)
+    add_files(new_day_path, args.year, args.day)
     
 
 if __name__ == "__main__":
