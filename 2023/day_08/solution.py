@@ -1,5 +1,4 @@
-from math import gcd
-from functools import reduce
+from math import lcm
 from pathlib import Path
 
 SCRIPT_PATH = Path(__file__).resolve().parent
@@ -27,10 +26,6 @@ def find_first_z(start_point, data):
         
     return count
 
-def find_lcm(x, y):
-    # Function for finding the least common multiple of two numbers using greatest common divisor function
-    return (x * y) // gcd(x, y)
-
 def part1(parsed_data):
     # Just pass AAA into find first Z and boom
     return find_first_z('AAA', parsed_data)
@@ -39,8 +34,7 @@ def part2(parsed_data):
     # Find all start points with an A at the end, find the number of steps it takes for each to find their first Z, then find the least common multiple
     start_points = [key for key in parsed_data[1].keys() if key[-1] == 'A']
     first_z = [find_first_z(start_point, parsed_data) for start_point in start_points]
-    lcm = reduce(find_lcm, first_z)
-    return lcm
+    return lcm(*first_z)
 
 if __name__ == "__main__":
     with open(INPUT_PATH , "r") as f:
