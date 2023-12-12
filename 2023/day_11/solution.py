@@ -54,7 +54,7 @@ def part1(parsed_data):
     return find_total(expand_universe(parsed_data[0], galaxy_map_copy, 1))
 
 def part2(parsed_data):
-    galaxy_map_copy = copy.deepcopy(parsed_data[1].copy())  # Have to use copy.deepcopy to ensure we don't accidentally edit the original galaxy_point list
+    galaxy_map_copy = copy.deepcopy(parsed_data[1])  # Have to use copy.deepcopy to ensure we don't accidentally edit the original galaxy_point list
     return find_total(expand_universe(parsed_data[0], galaxy_map_copy, 999999))  # The instructions say "replaced" so we are only actually adding 999,999 sections
 
 
