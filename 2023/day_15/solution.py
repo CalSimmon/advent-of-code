@@ -24,11 +24,10 @@ def part2(parsed_data):
     # Create a hashmap, add each entry into their respective hash algorithm'd box, and then delete if it ends in -
     hashmap = {}
     for entry in parsed_data:
-        if entry[-1] != '-':
-            ls, fl = entry.split('=')
-            hashmap.setdefault(reduce(hash_algorithm, ls, 0), {})[ls] = fl  # Use setdefault to add an empty nested dict if one doesn't exist already
-        else:
-            with suppress(KeyError): del hashmap[reduce(hash_algorithm, entry[:-1], 0)][entry[:-1]]  # Suppress ignores KeyError if the key hasn't shown up yet
+        with suppress(KeyError):
+            match entry.strip('-').split('='):
+                case [ls, fl]: hashmap.setdefault(reduce(hash_algorithm, ls, 0), {})[ls] = fl  # Use setdefault to add an empty nested dict if one doesn't exist already
+                case [ls]: del hashmap[reduce(hash_algorithm, entry[:-1], 0)][entry[:-1]]  # Suppress ignores KeyError if the key hasn't shown up yet
     
     # Return the sum of the hashmap using the (box_number + 1) * (position) * (value) formula in the prompt
     return sum([(key + 1) * (idx + 1) * int(hashmap[key][sub_key]) for key in hashmap for idx, sub_key in enumerate(hashmap[key]) if hashmap[key]])
