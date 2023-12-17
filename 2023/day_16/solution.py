@@ -112,7 +112,7 @@ def move(l, h, v, curr_point, curr_dir, mirror_hit):
 
 def get_energized_tiles(bool_map, mirror_hit):
     # Function to count all energized points based on their boolean value plus all mirrors hit
-    return len(mirror_hit) + sum(1 for line in bool_map for item in line if item and type(item) == bool)
+    return len(mirror_hit) + sum(1 for line in bool_map for item in line if item and isinstance(item, bool))
 
 def check_all_options(data):
     # Function to run through all possible entry points for part2, return the highest value
