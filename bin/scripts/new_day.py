@@ -39,7 +39,7 @@ def pull_input(year, day):
     cookies = {"session": session_cookie}
     response = requests.get(url, cookies=cookies)
     
-    return response.text
+    return response.text.strip('\n')
 
 
 ### Entry Point ###
