@@ -77,4 +77,4 @@ if __name__ == "__main__":
 
     print("\n--- ANSWERS ---")
     print(f"PART1 - The hole could carry {answer1} cubic meters of lava")
-    print(f"PART2 - {answer2}")
+    print(f"PART2 - The hex instructions would make a hole that would carry {answer2} cubic meters of lava")
