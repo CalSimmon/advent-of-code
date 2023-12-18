@@ -2,6 +2,7 @@ import os
 import subprocess
 import argparse
 from time import perf_counter
+from statistics import mean 
 from datetime import datetime
 from pathlib import Path
 import matplotlib.pyplot as plt
@@ -20,6 +21,11 @@ def parse_args() -> argparse.Namespace:
     args = parser.parse_args()
 
     return args
+
+def addlabels(x, y, max_x):
+    for i in range(len(x)):
+        if y[i] > max_x:
+            plt.text(i, (max_x - 0.01), "{:.2}".format(y[i]), ha = 'center')
 
 ### Entry Point ###
 def main():
@@ -46,6 +52,9 @@ def main():
 
     # Set up graph and output to both the graphs folder for history and to the year folder for GitHub
     plt.bar(day_title_data, day_exec_data)
+    max_x = max([number for number in day_exec_data if number < 1]) * 1.2
+    addlabels(day_title_data, day_exec_data, max_x)
+    plt.ylim(0, max_x)
     plt.xlabel('Day')
     plt.ylabel('Execution Time (s)')
     plt.title(f'Execution Time per Day for {args.year}')
