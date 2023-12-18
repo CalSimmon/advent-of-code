@@ -1,5 +1,4 @@
 from copy import deepcopy
-from collections import Counter
 from pathlib import Path
 
 SCRIPT_PATH = Path(__file__).resolve().parent

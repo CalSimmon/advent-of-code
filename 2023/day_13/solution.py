@@ -35,7 +35,7 @@ def find_reflect_point(ash_map, part2=False):
                         return (idx + 1)
                 elif reflected:
                     return (idx + 1)
-        except IndexError as e:  # Continue on if you found an index error
+        except IndexError:  # Continue on if you found an index error
             pass
     return
 

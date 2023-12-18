@@ -1,4 +1,3 @@
-from math import prod
 from contextlib import suppress
 from functools import reduce
 from pathlib import Path
