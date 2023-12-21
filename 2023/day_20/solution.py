@@ -14,23 +14,21 @@ def parse_input(data):
     for item in data_list:
         if item[0] != 'broadcaster':
             match item[0][0]:
-                case '%':  # For flip-flop modules, split into type, output, boolean status, and con_out to determine where to update output in conjunction modules
-                    data_dict[item[0][1:]] = {'type': item[0][0], 'output': item[1].split(', '), 'status': False, 'con_out': []}
-                case '&':  # For conjunction modules, split into type, output, dictionary status, and con_out to determine where to update output in conjunction modules
-                    data_dict[item[0][1:]] = {'type': item[0][0], 'output': item[1].split(', '), 'status': {}, 'con_out': []}
+                case '%':  # For flip-flop modules, split into type, output, boolean status
+                    data_dict[item[0][1:]] = {'type': item[0][0], 'output': item[1].split(', '), 'status': False}
+                case '&':  # For conjunction modules, split into type, output, dictionary status
+                    data_dict[item[0][1:]] = {'type': item[0][0], 'output': item[1].split(', '), 'status': {}}
         else:  # Broadcaster module has no type or status
             data_dict[item[0]] = {'type': None, 'output': item[1].split(', '), 'status': None}
     return determine_con_out(data_dict)
 
 def determine_con_out(data_dict):
-    # If a module outputs to a conjunction module, list the input module in the output's status, 
-    # and list in the output module in the input's con_out and return the updated dictionary
+    # If a module outputs to a conjunction module, list the input module in the output's status and return the updated dictionary
     for key in data_dict.keys():
         for module in data_dict[key]['output']:
             if module in data_dict.keys():
                 if data_dict[module]['type'] == '&':
                     data_dict[module]['status'][key] = 'L'
-                    data_dict[key]['con_out'].append(module)
     return data_dict
 
 def process_pulse(modules, origin, strength, targets):
