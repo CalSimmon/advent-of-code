@@ -1,0 +1,2 @@
+[alias]
+pr = "run -- --practice"

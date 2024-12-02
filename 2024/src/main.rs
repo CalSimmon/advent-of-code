@@ -5,21 +5,22 @@ use std::env;
 use std::time::Instant;
 
 fn main() {
-    let args: Vec<String> = env::args().collect();
+    let mut args: Vec<String> = env::args().collect();
     if args.len() < 2 {
         println!("Please provide a day");
         return;
     }
 
+    let prac = args.contains(&String::from("--practice"));
+    args.retain(|a| a != "--practice");
+
     let day: u8 = match args[1].parse::<u8>() {
         Ok(num) => num,
         Err(_) => {
-            println!("Invalid problem number");
+            println!("Invalid day number");
             return;
         }
     };
-
-    let prac = args.contains(&String::from("-p"));
 
     let mut _runtime = 0.0;
     
@@ -29,7 +30,7 @@ fn main() {
     let (p1, p2) = func(day, prac);
     let elapsed_ms = time.elapsed().as_nanos() as f64 / 1_000_000.0;
     
-    println!("\n=== Day {:02} ===", day);
+    println!("\n=== 🎄 Day {:02} 🎄 ===", day);
     println!("  · Part 1: {}", p1);
     println!("  · Part 2: {}", p2);
     println!("  · Elapsed: {:.4} ms", elapsed_ms);
