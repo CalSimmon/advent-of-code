@@ -31,9 +31,9 @@ fn main() {
     let elapsed_ms = time.elapsed().as_nanos() as f64 / 1_000_000.0;
     
     println!("\n=== 🎄 Day {:02} 🎄 ===", day);
-    println!("  · Part 1: {}", p1);
-    println!("  · Part 2: {}", p2);
-    println!("  · Elapsed: {:.4} ms", elapsed_ms);
+    println!("  ❄️  Part 1: {}", p1);
+    println!("  ❄️  Part 2: {}", p2);
+    println!("  ❄️  Elapsed: {:.4} ms", elapsed_ms);
 
     _runtime += elapsed_ms;
     
@@ -42,6 +42,7 @@ fn main() {
 fn get_solver(day: u8) -> fn(u8, bool) -> (i64, i64) {
     match day {
         1 => days::day01::solve,
+        2 => days::day02::solve,
         // Add more cases as needed
         _ => unimplemented!(),
     }
