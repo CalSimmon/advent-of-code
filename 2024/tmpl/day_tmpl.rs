@@ -21,8 +21,8 @@ fn part_two_solution(_data: ()) -> i64 {
 pub fn solve(day: u8, prac: bool) -> (i64, i64) {
     let data: ()  = parse_input(day, prac);
 
-    let sol1: i64 = part_one_solution(data.clone());
-    let sol2: i64 = part_two_solution(data.clone());
+    let sol1: i64 = part_one_solution(&data);
+    let sol2: i64 = part_two_solution(&data);
 
     (sol1, sol2)
 }
