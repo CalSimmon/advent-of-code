@@ -6,13 +6,13 @@ fn parse_input(day: u8, prac: bool) {
     // Add parsing code here
 }
 
-fn part_one_solution(_data: ()) -> i64 {
+fn part_one_solution(_data: &()) -> i64 {
     // Add part 1 solution here
     
     0
 }
 
-fn part_two_solution(_data: ()) -> i64 {
+fn part_two_solution(_data: &()) -> i64 {
     // Add part 2 solution here
     
     0

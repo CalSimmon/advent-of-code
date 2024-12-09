@@ -44,6 +44,7 @@ fn get_solver(day: u8) -> fn(u8, bool) -> (i64, i64) {
         1 => days::day01::solve,
         2 => days::day02::solve,
         3 => days::day03::solve,
+        4 => days::day04::solve,
         // Add more cases as needed
         _ => unimplemented!(),
     }
