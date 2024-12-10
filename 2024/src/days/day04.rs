@@ -1,16 +1,16 @@
-use std::collections::HashMap;
+use std::collections::{HashMap, HashSet};
 
 use crate::utilities::input::read_input;
 
-fn parse_input(day: u8, prac: bool) -> HashMap<String, Vec<(usize, usize)>> {
+fn parse_input(day: u8, prac: bool) -> HashMap<String, HashSet<(usize, usize)>> {
     let data = read_input(day, prac);
-    let mut map: HashMap<String, Vec<(usize, usize)>> = HashMap::new();
+    let mut map: HashMap<String, HashSet<(usize, usize)>> = HashMap::new();
 
     for (x, line) in data.iter().enumerate() {
         for (y, c) in line.char_indices() {
             map.entry(c.to_string())
-                .or_insert_with(Vec::new)
-                .push((x, y));
+                .or_insert_with(HashSet::new)
+                .insert((x, y));
         }
     }
     map
@@ -48,7 +48,7 @@ fn add_usize(u: usize, i: i32) -> Option<usize> {
     }
 }
 
-fn word_search(data: &HashMap<String, Vec<(usize, usize)>>, dir: (i32, i32), loc: &(usize, usize), mut i: usize) -> bool {
+fn word_search(data: &HashMap<String, HashSet<(usize, usize)>>, dir: (i32, i32), loc: &(usize, usize), mut i: usize) -> bool {
     let letters = ["X", "M", "A", "S"];
     let new_loc = match (add_usize(loc.0, dir.0), add_usize(loc.1, dir.1)) {
         (Some(x), Some(y)) => {
@@ -71,7 +71,7 @@ fn word_search(data: &HashMap<String, Vec<(usize, usize)>>, dir: (i32, i32), loc
     false
 }
 
-fn x_search(data: &HashMap<String, Vec<(usize, usize)>>, loc: &(usize, usize)) -> bool {
+fn x_search(data: &HashMap<String, HashSet<(usize, usize)>>, loc: &(usize, usize)) -> bool {
     for pair in x_directions() {
         let new_loc = match (add_usize(loc.0, pair.0.0), add_usize(loc.1, pair.0.1)) {
             (Some(x), Some(y)) => {
@@ -112,7 +112,7 @@ fn x_search(data: &HashMap<String, Vec<(usize, usize)>>, loc: &(usize, usize)) -
     true
 }
 
-fn part_one_solution(data: &HashMap<String, Vec<(usize, usize)>>) -> i64 {
+fn part_one_solution(data: &HashMap<String, HashSet<(usize, usize)>>) -> i64 {
     let mut total: i64 = 0;
     for x in data.get("X").unwrap() {
         for dir in directions() {
@@ -122,7 +122,7 @@ fn part_one_solution(data: &HashMap<String, Vec<(usize, usize)>>) -> i64 {
     total
 }
 
-fn part_two_solution(data: &HashMap<String, Vec<(usize, usize)>>) -> i64 {
+fn part_two_solution(data: &HashMap<String, HashSet<(usize, usize)>>) -> i64 {
     let mut total: i64 = 0;
     for x in data.get("A").unwrap() {
         total += x_search(data, x) as i64;
@@ -131,7 +131,7 @@ fn part_two_solution(data: &HashMap<String, Vec<(usize, usize)>>) -> i64 {
 }
 
 pub fn solve(day: u8, prac: bool) -> (i64, i64) {
-    let data: HashMap<String, Vec<(usize, usize)>> = parse_input(day, prac);
+    let data: HashMap<String, HashSet<(usize, usize)>> = parse_input(day, prac);
 
     let sol1: i64 = part_one_solution(&data);
     let sol2: i64 = part_two_solution(&data);
