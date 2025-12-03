@@ -19,7 +19,7 @@ def part1(parsed_data):
         highest = max(bank[:-1])
         next_high = max(bank[bank.index(highest) + 1 :])
         joltage = f"{highest}{next_high}"
-        total_value += int(joltage)  # Convert to string and add to total
+        total_value += int(joltage)  # Convert from string and add to total
         print(f"Battery {idx + 1} joltage is {joltage}")
     return total_value
 
@@ -36,7 +36,7 @@ def part2(parsed_data):
             battery_str += str(curr_max)
             curr_idx += curr_range.index(curr_max) + 1
         print(f"Battery {idx + 1} mega joltage is {battery_str}")
-        total_value += int(battery_str)  # Convert to string and add to total
+        total_value += int(battery_str)  # Convert from string and add to total
     return total_value
 
 
