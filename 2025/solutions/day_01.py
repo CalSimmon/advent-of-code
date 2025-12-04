@@ -1,11 +1,3 @@
-from pathlib import Path
-
-SCRIPT_PATH = Path(__file__).resolve().parent
-INPUT_PATH = Path(SCRIPT_PATH, "inputs/input.txt")
-# INPUT_PATH = Path(SCRIPT_PATH, "inputs/example1.txt")
-# INPUT_PATH = Path(SCRIPT_PATH, "inputs/example2.txt")
-
-
 def parse_input(data):
     # Function for parsing input.
     data_list = []
@@ -55,17 +47,20 @@ def part2(parsed_data):
     return total_value
 
 
-if __name__ == "__main__":
-    with open(INPUT_PATH, "r") as f:
+def solve(part, input_path):
+    with open(input_path, "r") as f:
         parsed_data = parse_input(f.read())
 
-    print("--- PART 1 ---")
-    answer1 = part1(parsed_data)
+    answers = "\n--- ANSWERS ---"
 
-    print("\n--- PART 2 ---")
-    answer2 = part2(parsed_data)
+    if part is None or part == 1:
+        print("--- PART 1 ---")
+        answer1 = part1(parsed_data)
+        answers += f"\nPART1 - The dial lands on zero {answer1} times."
 
-    print("\n--- ANSWERS ---")
-    print(f"PART1 - The dial lands on zero {answer1} times.")
-    print(f"PART2 - The dial passes zero {answer2} times.")
+    if part is None or part == 2:
+        print("\n--- PART 2 ---")
+        answer2 = part2(parsed_data)
+        answers += f"\nPART2 - The dial passes zero {answer2} times."
 
+    print(answers)

@@ -1,11 +1,3 @@
-from pathlib import Path
-
-SCRIPT_PATH = Path(__file__).resolve().parent
-INPUT_PATH = Path(SCRIPT_PATH, "inputs/input.txt")
-# INPUT_PATH = Path(SCRIPT_PATH, "inputs/example1.txt")
-# INPUT_PATH = Path(SCRIPT_PATH, "inputs/example2.txt")
-
-
 def parse_input(data):
     # Function for parsing input.
     data_list = [list(num) for num in data.splitlines()]
@@ -79,16 +71,22 @@ def part2(parsed_data, rolls_data):
     return total_value
 
 
-if __name__ == "__main__":
-    with open(INPUT_PATH, "r") as f:
+def solve(part, input_path):
+    with open(input_path, "r") as f:
         parsed_data, rolls_data = parse_input(f.read())
 
-    print("--- PART 1 ---")
-    answer1 = part1(parsed_data, rolls_data)
+    answers = "\n--- ANSWERS ---"
 
-    print("\n--- PART 2 ---")
-    answer2 = part2(parsed_data, rolls_data)
+    if part is None or part == 1:
+        print("--- PART 1 ---")
+        answer1 = part1(parsed_data, rolls_data)
+        answers += f"\nPART1 - There are {answer1} that are accessible."
 
-    print("\n--- ANSWERS ---")
-    print(f"PART1 - There are {answer1} that are accessible.")
-    print(f"PART2 - There are {answer2} that accessible after multiple passes.")
+    if part is None or part == 2:
+        print("\n--- PART 2 ---")
+        answer2 = part2(parsed_data, rolls_data)
+        answers += (
+            f"\nPART2 - There are {answer2} that accessible after multiple passes."
+        )
+
+    print(answers)
