@@ -9,6 +9,7 @@ parser = argparse.ArgumentParser()
 group = parser.add_mutually_exclusive_group(required=True)
 group.add_argument("-d", "--day", type=int, help="Day number to run")
 group.add_argument("-a", "--all", action="store_true", help="Run all days")
+parser.add_argument("-t", "--test", action="store_true", help="Run example test")
 parser.add_argument(
     "-p", "--part", type=int, choices=[1, 2], help="Optional: Part 1 or 2"
 )
@@ -32,14 +33,17 @@ def get_input_file_name(day, example):
         return Path(INPUT_PATH, f"day_{day:02d}/example{example}.txt")
 
 
-def run_day(day_number, part=None, example=None):
+def run_day(day_number, part=None, example=None, test=False):
     try:
         module = importlib.import_module(f"solutions.day_{day_number:02d}")
     except ModuleNotFoundError:
         print(f"Day {day_number} not implemented")
         return False
 
-    module.solve(part=part, input_path=get_input_file_name(day_number, example))
+    if test:
+        module.test(part=part, input_path=get_input_file_name(day_number, 1))
+    else:
+        module.solve(part=part, input_path=get_input_file_name(day_number, example))
     return True
 
 
@@ -49,4 +53,4 @@ if args.all:
         run_day(day, args.part, args.example)
         print()
 else:
-    run_day(args.day, args.part, args.example)
+    run_day(args.day, args.part, args.example, args.test)
