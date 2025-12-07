@@ -4,15 +4,26 @@ import math
 
 def parse_input(data):
     # Function for parsing input.
-    data_list = [list(re.split(r"\s+", row.strip())) for row in data.splitlines()]
-    col_list = list(zip(*data_list))
+    data_list = data.splitlines()
+    col_len_list = [len(col) for col in re.split(r"\s(?=[+\*])", data_list[-1])]
+    col_list = []
+    for row in data_list:
+        cols = []
+        idx = 0
+        for col_len in col_len_list:
+            idx_next = idx + col_len
+            cols.append(row[idx : idx_next])
+            idx = idx_next + 1
+        col_list.append(cols)
+    col_list = list(zip(*col_list))
     return col_list
 
 
 def part1(parsed_data):
     total_value = 0
 
-    for idx, expression in enumerate(parsed_data):
+    strip_list = [num.strip() for num in parsed_data]
+    for idx, expression in enumerate(strip_list):
         answer = 0
         match expression[-1]:
             case "+":
@@ -27,6 +38,17 @@ def part1(parsed_data):
 
 def part2(parsed_data):
     total_value = 0
+
+    for col in parsed_data:
+        rev_col = list(zip(*[list(num[::-1]) for num in col[: -1]]))
+        join_numbers = [int(''.join(num).strip()) for num in rev_col]
+        answer = 0
+        match col[-1].strip():
+            case '+':
+                answer = sum(list(map(int, join_numbers)))
+            case '*':
+                answer = math.prod(list(map(int, join_numbers)))
+        total_value += answer
     return total_value
 
 
@@ -73,7 +95,7 @@ def test(part, input_path):
 
     if part is None or part == 2:
         output = part2(parsed_data)
-        expected = 14
+        expected = 3263827
         try:
             assert output == expected
         except AssertionError:
