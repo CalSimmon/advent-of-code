@@ -12,7 +12,7 @@ def parse_input(data):
         idx = 0
         for col_len in col_len_list:
             idx_next = idx + col_len
-            cols.append(row[idx : idx_next])
+            cols.append(row[idx:idx_next])
             idx = idx_next + 1
         col_list.append(cols)
     col_list = list(zip(*col_list))
@@ -22,7 +22,7 @@ def parse_input(data):
 def part1(parsed_data):
     total_value = 0
 
-    strip_list = [num.strip() for num in parsed_data]
+    strip_list = [[n.strip() for n in num] for num in parsed_data]
     for idx, expression in enumerate(strip_list):
         answer = 0
         match expression[-1]:
@@ -39,15 +39,16 @@ def part1(parsed_data):
 def part2(parsed_data):
     total_value = 0
 
-    for col in parsed_data:
-        rev_col = list(zip(*[list(num[::-1]) for num in col[: -1]]))
-        join_numbers = [int(''.join(num).strip()) for num in rev_col]
+    for idx, col in enumerate(parsed_data):
+        rev_col = list(zip(*[list(num[::-1]) for num in col[:-1]]))
+        join_numbers = [int("".join(num).strip()) for num in rev_col]
         answer = 0
         match col[-1].strip():
-            case '+':
+            case "+":
                 answer = sum(list(map(int, join_numbers)))
-            case '*':
+            case "*":
                 answer = math.prod(list(map(int, join_numbers)))
+        print("Expression {} equals {}.".format(idx, answer))
         total_value += answer
     return total_value
 
@@ -61,12 +62,12 @@ def solve(part, input_path):
     if part is None or part == 1:
         print("--- PART 1 ---")
         answer1 = part1(parsed_data)
-        answers += f"\nPART1 - {answer1}"
+        answers += f"\nPART1 - The grand total of all expressions is {answer1}."
 
     if part is None or part == 2:
         print("\n--- PART 2 ---")
         answer2 = part2(parsed_data)
-        answers += f"\nPART2 - {answer2}"
+        answers += f"\nPART2 - The grand total of all fixed expressions is {answer2}."
 
     print(answers)
 
